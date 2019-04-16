@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Rekisterointi</title>
+<link type="text/css" rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
+</head>
+<body>
+<h1>Rekisteröi</h1>
+     <div class="col-md-4">
+		<form th:object="${signupform}" th:action="@{/saveuser}" action="#" method="post">
+			<div>
+				<label> Käyttäjänimi :<input type="text" th:field="*{username}" class="form-control"/></label>
+				<p th:if="${#fields.hasErrors('username')}" th:errors="username">Virhe käyttäjänimessä</p>	
+			</div>
+			<div>
+				<label> Salis :<input type="password" th:field="*{password}" class="form-control"/></label>
+				<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Virhe Salasanassa</p>	
+			</div>
+			<div>
+				<label> Kirjoita salis uuellee: <input type="password" th:field="*{passwordCheck}" class="form-control"/></label>
+				<p th:if="${#fields.hasErrors('passwordCheck')}" th:errors="*{passwordCheck}">Virhe: salis ei mätchää!</p>	
+			</div>
+			
+			<input type="submit" class="btn btn-success" value="Rekisterointi"></input>		
+		</form>
+	</div>
+</body>
+</html>

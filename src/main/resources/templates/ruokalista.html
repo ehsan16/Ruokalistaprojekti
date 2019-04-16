@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Ruokalista</title>
+
+</head>
+<body>
+<div class="col-md-4">
+	<h1>Ruokalista</h1>
+	</div>
+	<div class="col-md-4">
+		<h3 th:inline="text">Tervetuloa [[${#httpServletRequest.remoteUser}]]!</h3>
+	</div>
+			<script>
+$(document).ready(function(){
+  $("#hide").click(function(){
+    $("b").hide();
+  });
+  $("#show").click(function(){
+    $("b").show();
+  });
+});
+</script>
+<b style="color: blue">Hei kaikille! Tässä sivussa näette minun lisäämät ruoat ja jos olette kasvissyöjiä niin löydätte myös kasvisruoat!</b>
+<button id="hide" style="color: red">Piilota intro</button>
+<button id="show" style="color: green">Näytä intro</button>
+	
+<table class="table table-striped">
+<tr>
+
+	<th>Ruoka</th>
+	<th>Ryhmä</th>
+	</tr>
+	<tr th:each="ruoka : ${ruoat}">
+	<td th:text="${ruoka.name}"></td>
+	<td th:text="${ruoka.ryhma.name}"></td>
+	<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/poista/{id}(id=${ruoka.id})}" class="btn btn-danger">Poista</a></td> 
+	<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/muokkaa/{id}(id=${ruoka.id})}" class="btn btn-warning">Muokkaa</a></td>
+</tr>
+</table>
+
+	<a href="/lisaaruoka" class="btn btn-success">Lisää ruoka</a> 
+	<div class="col-md-4" style="padding:20px 0">
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Kirjaudu ulos" class="btn btn-danger"/>
+		</form>
+		</div> 
+
+
+</body>
+</html>
